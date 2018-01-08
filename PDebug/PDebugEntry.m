@@ -12,6 +12,8 @@
 #import "fishhook.h"
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
+#import "RTBRuntime.h"
+#import "RTBRuntimeHeader.h"
 
 static void * (*orig_dlsym)(void *, const char *);
 
@@ -38,35 +40,36 @@ void * my_dlsym(void * __handle, const char * __symbol)
     
     NSLog(@"PDebug injected.");
     
-//    [self registerFonts];
-    
-    UIFont *font = [UIFont systemFontOfSize:3];
-    NSLog(@"%@", font);
-    font = [UIFont fontWithName:@"PingFangSC-Thin" size:8];
-    NSLog(@"%@", font);
-    font = [UIFont fontWithName:@"TTUniqlo-Bold" size:8];
-    NSLog(@"%@", font);
-    
-    
+//    [self generateHeaders];
 }
 
-+ (void)registerFonts
++ (void)generateHeaders
 {
-    [@[@"TTUniqlo-Bold", @"TTUniqlo-Light"] enumerateObjectsUsingBlock:^(NSString*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSURL *fontFileUrl = [[NSBundle mainBundle] URLForResource:obj withExtension:@"ttf"];
-        [self registerFontWithURL: fontFileUrl];
-        UIFont *font = [UIFont fontWithName:obj size:11];
-        NSAssert(font, @"UIFont object should not be nil, check if the font file is added to the application bundle and you're using the correct font name.");
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *baseFolder = [docPath stringByAppendingPathComponent:@"headers"];
+    NSError *err = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:baseFolder error:&err];
+    [[NSFileManager defaultManager] createDirectoryAtPath:baseFolder withIntermediateDirectories:YES attributes:nil error:&err];
+    RTBRuntime *rt = [RTBRuntime sharedInstance];
+    [rt emptyCachesAndReadAllRuntimeClasses];
+    [rt.allClassStubsByImagePath enumerateKeysAndObjectsUsingBlock:^(NSString *  _Nonnull imagePath, NSArray *  _Nonnull classNames, BOOL * _Nonnull stop) {
+        if (![imagePath containsString:[[NSBundle mainBundle] bundlePath]]) {
+            return;
+        }
+        [classNames enumerateObjectsUsingBlock:^(RTBClass * _Nonnull cls, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString *className = cls.classObjectName;
+            Class klass = NSClassFromString(className);
+            NSString *header = [RTBRuntimeHeader headerForClass:klass displayPropertiesDefaultValues:YES];
+            if (!header) {
+                return;
+            }
+            NSString *headerPath = [[baseFolder stringByAppendingPathComponent:className] stringByAppendingPathExtension:@"h"];;
+            NSError *err = nil;
+            [header writeToFile:headerPath atomically:YES encoding:NSUTF8StringEncoding error:&err];
+            NSLog(@"%@", err);
+        }];
     }];
-}
-
-+ (void)registerFontWithURL:(NSURL *)url {
-    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:[url path]], @"Font file doesn't exist");
-    CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)url);
-    CGFontRef newFont = CGFontCreateWithDataProvider(fontDataProvider);
-    CGDataProviderRelease(fontDataProvider);
-    CTFontManagerRegisterGraphicsFont(newFont, nil);
-    CGFontRelease(newFont);
+    
 }
 
 @end
