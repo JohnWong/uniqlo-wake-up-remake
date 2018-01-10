@@ -66,7 +66,6 @@ void * my_dlsym(void * __handle, const char * __symbol)
             NSString *headerPath = [[baseFolder stringByAppendingPathComponent:className] stringByAppendingPathExtension:@"h"];;
             NSError *err = nil;
             [header writeToFile:headerPath atomically:YES encoding:NSUTF8StringEncoding error:&err];
-            NSLog(@"%@", err);
         }];
     }];
     

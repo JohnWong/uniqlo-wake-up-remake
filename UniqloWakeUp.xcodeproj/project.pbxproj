@@ -25,6 +25,12 @@
 		52299AEB2003A0E600C69C74 /* RTBProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 52299ADD2003A0E600C69C74 /* RTBProtocol.h */; };
 		52299AEC2003A0E600C69C74 /* RTBClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 52299ADE2003A0E600C69C74 /* RTBClass.h */; };
 		52299AED2003A0E600C69C74 /* RTBTypeDecoder2.h in Headers */ = {isa = PBXBuildFile; fileRef = 52299ADF2003A0E600C69C74 /* RTBTypeDecoder2.h */; };
+		52299AF02003B59400C69C74 /* NSDictionary+Hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52299AEE2003B59400C69C74 /* NSDictionary+Hook.h */; };
+		52299AF12003B59400C69C74 /* NSDictionary+Hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 52299AEF2003B59400C69C74 /* NSDictionary+Hook.m */; };
+		52F99ECA2006151C0017B8B3 /* CTBlockDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F99EC52006151C0017B8B3 /* CTBlockDescription.m */; };
+		52F99ECB2006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F99EC62006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.m */; };
+		52F99ECC2006151C0017B8B3 /* CTBlockDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 52F99EC72006151C0017B8B3 /* CTBlockDescription.h */; };
+		52F99ECE2006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 52F99EC92006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.h */; };
 		AAE19B6D1AB146DE006029B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE19B6C1AB146DE006029B9 /* main.m */; };
 		AAE19B701AB146DE006029B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE19B6F1AB146DE006029B9 /* AppDelegate.m */; };
 		AAE19B731AB146DE006029B9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE19B721AB146DE006029B9 /* ViewController.m */; };
@@ -80,6 +86,13 @@
 		52299ADD2003A0E600C69C74 /* RTBProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBProtocol.h; sourceTree = "<group>"; };
 		52299ADE2003A0E600C69C74 /* RTBClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBClass.h; sourceTree = "<group>"; };
 		52299ADF2003A0E600C69C74 /* RTBTypeDecoder2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBTypeDecoder2.h; sourceTree = "<group>"; };
+		52299AEE2003B59400C69C74 /* NSDictionary+Hook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Hook.h"; sourceTree = "<group>"; };
+		52299AEF2003B59400C69C74 /* NSDictionary+Hook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Hook.m"; sourceTree = "<group>"; };
+		52F99EC52006151C0017B8B3 /* CTBlockDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTBlockDescription.m; sourceTree = "<group>"; };
+		52F99EC62006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTObjectiveCRuntimeAdditions.m; sourceTree = "<group>"; };
+		52F99EC72006151C0017B8B3 /* CTBlockDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBlockDescription.h; sourceTree = "<group>"; };
+		52F99EC82006151C0017B8B3 /* CTObjectiveCRuntimeAdditions-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTObjectiveCRuntimeAdditions-Prefix.pch"; sourceTree = "<group>"; };
+		52F99EC92006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTObjectiveCRuntimeAdditions.h; sourceTree = "<group>"; };
 		AAE19B671AB146DE006029B9 /* UniqloWakeUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniqloWakeUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAE19B6B1AB146DE006029B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAE19B6C1AB146DE006029B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -137,6 +150,18 @@
 			path = model;
 			sourceTree = "<group>";
 		};
+		52F99EC42006151C0017B8B3 /* CTObjectiveCRuntimeAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				52F99EC72006151C0017B8B3 /* CTBlockDescription.h */,
+				52F99EC52006151C0017B8B3 /* CTBlockDescription.m */,
+				52F99EC82006151C0017B8B3 /* CTObjectiveCRuntimeAdditions-Prefix.pch */,
+				52F99EC92006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.h */,
+				52F99EC62006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.m */,
+			);
+			path = CTObjectiveCRuntimeAdditions;
+			sourceTree = "<group>";
+		};
 		AAE19B5E1AB146DE006029B9 = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +207,7 @@
 		AAE19BBB1AB147E0006029B9 /* PDebug */ = {
 			isa = PBXGroup;
 			children = (
+				52F99EC42006151C0017B8B3 /* CTObjectiveCRuntimeAdditions */,
 				52299AD12003A0E600C69C74 /* model */,
 				AAE19BE31AB14C1D006029B9 /* Libs */,
 				AAE19BDC1AB14C0F006029B9 /* PDebugEntry.h */,
@@ -191,6 +217,8 @@
 				52299ACA200391EA00C69C74 /* NSObject+Hook.m */,
 				52299ACD2003997000C69C74 /* YYClassInfo.h */,
 				52299ACE2003997000C69C74 /* YYClassInfo.m */,
+				52299AEE2003B59400C69C74 /* NSDictionary+Hook.h */,
+				52299AEF2003B59400C69C74 /* NSDictionary+Hook.m */,
 			);
 			path = PDebug;
 			sourceTree = "<group>";
@@ -223,12 +251,15 @@
 			files = (
 				52299AE32003A0E600C69C74 /* RTBRuntime.h in Headers */,
 				52299AE12003A0E600C69C74 /* RTBTypeDecoder.h in Headers */,
+				52F99ECE2006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.h in Headers */,
+				52F99ECC2006151C0017B8B3 /* CTBlockDescription.h in Headers */,
 				52299AE82003A0E600C69C74 /* RTBMethod.h in Headers */,
 				AAE19BE01AB14C0F006029B9 /* PDebugEntry.h in Headers */,
 				52299AEC2003A0E600C69C74 /* RTBClass.h in Headers */,
 				52299ACB200391EA00C69C74 /* NSObject+Hook.h in Headers */,
 				52299AE22003A0E600C69C74 /* RTBRuntimeHeader.h in Headers */,
 				52299AEB2003A0E600C69C74 /* RTBProtocol.h in Headers */,
+				52299AF02003B59400C69C74 /* NSDictionary+Hook.h in Headers */,
 				AAE19BE21AB14C0F006029B9 /* fishhook.h in Headers */,
 				52299ACF2003997000C69C74 /* YYClassInfo.h in Headers */,
 				52299AED2003A0E600C69C74 /* RTBTypeDecoder2.h in Headers */,
@@ -355,11 +386,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52F99ECA2006151C0017B8B3 /* CTBlockDescription.m in Sources */,
 				52299AD02003997000C69C74 /* YYClassInfo.m in Sources */,
 				AAE19BE11AB14C0F006029B9 /* fishhook.c in Sources */,
 				52299AE62003A0E600C69C74 /* RTBProtocol.m in Sources */,
 				52299AE52003A0E600C69C74 /* RTBClass.m in Sources */,
+				52F99ECB2006151C0017B8B3 /* CTObjectiveCRuntimeAdditions.m in Sources */,
 				52299ACC200391EA00C69C74 /* NSObject+Hook.m in Sources */,
+				52299AF12003B59400C69C74 /* NSDictionary+Hook.m in Sources */,
 				52299AE92003A0E600C69C74 /* RTBRuntime.m in Sources */,
 				AAE19BDF1AB14C0F006029B9 /* PDebugEntry.m in Sources */,
 				52299AEA2003A0E600C69C74 /* RTBRuntimeHeader.m in Sources */,
