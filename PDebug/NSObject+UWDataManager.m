@@ -22,8 +22,16 @@
             Method m2 = class_getClassMethod(cls, @selector(hook_locationDisplayNameFromLocation::));
             method_exchangeImplementations(m1, m2);
         }
-        class_swizzleSelector(cls, @selector(setWeather:), @selector(hook_setWeather:));
-        class_swizzleSelector(cls, @selector(setTemperature:), @selector(hook_setTemperature:));
+        {
+            Method m1 = class_getInstanceMethod(cls, @selector(setWeather:));
+            Method m2 = class_getInstanceMethod(self, @selector(hook_setWeather:));
+            method_exchangeImplementations(m1, m2);
+        }
+        {
+            Method m1 = class_getInstanceMethod(cls, @selector(setTemperature:));
+            Method m2 = class_getInstanceMethod(self, @selector(hook_setTemperature:));
+            method_exchangeImplementations(m1, m2);
+        }
     });
 }
 

@@ -39,16 +39,23 @@
     } else if ([path isEqualToString:@"weather"]) {
         success(nil, @{
                        @"result": @"success",
-                       @"temperature": @(11),
+                       @"temperature": @{
+                               @"low": @{
+                                       @"c": @(-3),
+                                       @"f": @26
+                                       },
+                               @"high": @{
+                                       @"c": @12,
+                                       @"f": @37
+                                       }
+                               },
                        @"conditions": @(3),
-                       @"weather": @(2)
+                       @"weather": @(2) // 大雨
                        });
     } else if ([path isEqualToString:@"getnews"]) {
         success(nil, @{
                        @"result": @"success",
-                       @"temperature": @(11),
-                       @"conditions": @(3),
-                       @"weather": @(2)
+                       
                        });
     } else {
         [self hook_getPath:path parameters:parameters success:success failure:failure];
