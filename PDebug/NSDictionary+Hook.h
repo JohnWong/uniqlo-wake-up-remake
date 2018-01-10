@@ -10,4 +10,7 @@
 
 @interface NSDictionary (Hook)
 
+- (NSDictionary *)dictionaryForKey:(NSString *)key;
+- (int)intForKey:(NSString *)key;
+- (NSString *)stringForKey:(NSString *)key;
 @end

@@ -9,28 +9,103 @@
 
 #import "NSDictionary+Hook.h"
 #import <objc/runtime.h>
+#import "CTObjectiveCRuntimeAdditions.h"
 
-@implementation NSDictionary (Hook)
+@implementation NSObject (Hook)
 
 + (void)load
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        Class cls = NSClassFromString(@"__NSDictionaryM");
-        Method m1 = class_getInstanceMethod(cls, @selector(objectForKey:));
-        Method m2 = class_getInstanceMethod(cls, @selector(hook_objectForKey:));
-        method_exchangeImplementations(m1, m2);
-        
+    {
+        Method originalMethod = class_getInstanceMethod(NSClassFromString(@"__NSDictionaryM"), @selector(objectForKey:));
+        Method swizzledMethod = class_getInstanceMethod(self, @selector(hook_objectForKey:));
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    }
+    {
+        Method originalMethod = class_getInstanceMethod(NSClassFromString(@"__NSDictionaryI"), @selector(objectForKey:));
+        Method swizzledMethod = class_getInstanceMethod(self, @selector(hook1_objectForKey:));
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    }
+    {
+        Method originalMethod = class_getInstanceMethod(NSClassFromString(@"__NSSingleEntryDictionaryI"), @selector(objectForKey:));
+        Method swizzledMethod = class_getInstanceMethod(self, @selector(hook2_objectForKey:));
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    }
+    {
+        Method originalMethod = class_getInstanceMethod(NSClassFromString(@"__NSDictionary0"), @selector(objectForKey:));
+        Method swizzledMethod = class_getInstanceMethod(self, @selector(hook3_objectForKey:));
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        {
+            Class cls = NSClassFromString(@"NSDictionary");
+            class_swizzleSelector(cls, @selector(dictionaryForKey:), @selector(hook_dictionaryForKey:));
+            class_swizzleSelector(cls, @selector(intForKey:), @selector(hook_intForKey:));
+            class_swizzleSelector(cls, @selector(stringForKey:), @selector(hook_stringForKey:));
+        }
     });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSString *t = @{@"hahahha": @"1"}[@"hahahha"];
+    });
+}
+
+- (void)printKey:(NSString *)aKey
+{
+    if ([aKey isKindOfClass:[NSString class]] &&
+        ![aKey hasPrefix:@"0"] &&
+        ![aKey hasPrefix:@"NS"]) {
+        if ([aKey isEqualToString:@"conditions"] ||
+            [aKey isEqualToString:@"temperature"] ||
+            [aKey isEqualToString:@"high"] ||
+            [aKey isEqualToString:@"low"]) {
+            
+        } else if ([aKey hasSuffix:@"framework"]) {
+            return;
+        }
+        NSLog(@"%@", aKey);
+    }
 }
 
 - (id)hook_objectForKey:(id)aKey
 {
     id result = [self hook_objectForKey:aKey];
-    if ([aKey isKindOfClass:[NSString class]]) {
-        NSLog(@"KEY: %@", aKey);
-    }
+    [self printKey:aKey];
     return result;
+}
+
+- (id)hook1_objectForKey:(id)aKey
+{
+    id result = [self hook1_objectForKey:aKey];
+    [self printKey:aKey];
+    return result;
+}
+
+- (id)hook2_objectForKey:(id)aKey
+{
+    id result = [self hook2_objectForKey:aKey];
+    [self printKey:aKey];
+    return result;
+}
+
+- (id)hook3_objectForKey:(id)aKey
+{
+    id result = [self hook3_objectForKey:aKey];
+    [self printKey:aKey];
+    return result;
+}
+
+- (NSDictionary *)hook_dictionaryForKey:(NSString *)key
+{
+    return [self hook_dictionaryForKey:key];
+}
+
+- (int)hook_intForKey:(NSString *)key
+{
+    return [self hook_intForKey:key];
+}
+
+- (NSString *)hook_stringForKey:(NSString *)key
+{
+    return [self hook_stringForKey:key];
 }
 
 @end
