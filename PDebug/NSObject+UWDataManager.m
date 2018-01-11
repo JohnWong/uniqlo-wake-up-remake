@@ -23,6 +23,11 @@
             method_exchangeImplementations(m1, m2);
         }
         {
+            Method m1 = class_getInstanceMethod(cls, @selector(weather));
+            Method m2 = class_getInstanceMethod(self, @selector(hook_weather));
+            method_exchangeImplementations(m1, m2);
+        }
+        {
             Method m1 = class_getInstanceMethod(cls, @selector(setWeather:));
             Method m2 = class_getInstanceMethod(self, @selector(hook_setWeather:));
             method_exchangeImplementations(m1, m2);
@@ -41,8 +46,21 @@
     return result;
 }
 
+- (int)hook_weather
+{
+    return [self hook_weather];
+}
+
 - (void)hook_setWeather:(int)arg1
 {
+    // 0: sunny
+    // 1: partly cloudy
+    // 2: cloudy
+    // 3: rainy
+    // 4: stormy
+    // 5: snowy
+    // 6: foggy
+    // 7: unknown
     [self hook_setWeather:arg1];
 }
 

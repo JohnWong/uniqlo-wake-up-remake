@@ -37,6 +37,14 @@
                        @"lon": @120.1699982
                        });
     } else if ([path isEqualToString:@"weather"]) {
+        // 0: sunny
+        // 1: partly cloudy
+        // 2: cloudy
+        // 3: rainy
+        // 4: stormy
+        // 5: snowy
+        // 6: foggy
+        // 7: unknown
         success(nil, @{
                        @"result": @"success",
                        @"temperature": @{
@@ -50,7 +58,7 @@
                                        }
                                },
                        @"conditions": @(3),
-                       @"weather": @(2) // 大雨
+                       @"weather": @(2)
                        });
     } else if ([path isEqualToString:@"getnews"]) {
         success(nil, @{
