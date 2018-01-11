@@ -50,15 +50,12 @@
     if ([aKey isKindOfClass:[NSString class]] &&
         ![aKey hasPrefix:@"0"] &&
         ![aKey hasPrefix:@"NS"]) {
-        if ([aKey isEqualToString:@"conditions"] ||
-            [aKey isEqualToString:@"temperature"] ||
-            [aKey isEqualToString:@"high"] ||
-            [aKey isEqualToString:@"low"]) {
+        if ([aKey isEqualToString:@"weather"]) {
             
         } else if ([aKey hasSuffix:@"framework"]) {
             return;
         }
-        NSLog(@"%@", aKey);
+//        NSLog(@"%@", aKey);
     }
 }
 
@@ -103,6 +100,11 @@
 - (NSString *)hook_stringForKey:(NSString *)key
 {
     return [self hook_stringForKey:key];
+}
+
+- (NSUInteger)length
+{
+    return 1;
 }
 
 @end

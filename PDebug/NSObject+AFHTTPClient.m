@@ -22,6 +22,7 @@
 
 - (void)hook_getPath:(NSString *)path parameters:(NSDictionary *)parameters success:(void (^)(id, id))success failure:(void (^)(id, NSError *))failure
 {
+    NSLog(@"%@\n%@", path, parameters);
     if ([path isEqualToString:@"init"]) {
         success(nil, @{
                        @"result": @"success",
@@ -37,36 +38,98 @@
                        @"lon": @120.1699982
                        });
     } else if ([path isEqualToString:@"weather"]) {
-        // 0: sunny
-        // 1: partly cloudy
-        // 2: cloudy
-        // 3: rainy
-        // 4: stormy
-        // 5: snowy
-        // 6: foggy
-        // 7: unknown
-        success(nil, @{
-                       @"result": @"success",
-                       @"temperature": @{
-                               @"low": @{
-                                       @"c": @(-3),
-                                       @"f": @26
-                                       },
-                               @"high": @{
-                                       @"c": @12,
-                                       @"f": @37
-                                       }
-                               },
-                       @"conditions": @(3),
-                       @"weather": @(2)
-                       });
+        NSString *weatherUrl = [NSString stringWithFormat:@"https://api.seniverse.com/v3/weather/daily.json?key=xn3lhqggtje7uqmp&location=%@:%@&language=zh-Hans&unit=c&start=0&days=1", parameters[@"lat"], parameters[@"lon"]];
+        [self hook_getPath:weatherUrl parameters:nil success:^(id operation, NSDictionary *result) {
+            NSArray *list = [result[@"results"] firstObject][@"daily"];
+            NSDictionary *weather = list.firstObject;
+            // 0: sunny
+            // 1: partly cloudy
+            // 2: cloudy
+            // 3: rainy
+            // 4: stormy
+            // 5: snowy
+            // 6: foggy
+            // 7: unknown
+            int high = weather[@"high"] ? [weather[@"high"] intValue] : 0;
+            int low = weather[@"low"] ? [weather[@"low"] intValue] : 0;
+            int weatherCode = [self.class getCodeFromWeather:[weather[@"code_day"] intValue]];
+            success(nil, @{
+                           @"result": @"success",
+                           @"temperature": @{
+                                   @"low": @{
+                                           @"c": @(low),
+                                           @"f": @(low),
+                                           },
+                                   @"high": @{
+                                           @"c": @(high),
+                                           @"f": @(high),
+                                           }
+                                   },
+                           @"conditions": @(weatherCode)
+                           });
+        } failure:failure];
+        
     } else if ([path isEqualToString:@"getnews"]) {
         success(nil, @{
                        @"result": @"success",
-                       
+                       @"lang": @"cn",
+                       @"data": @{
+                               @"id": @666,
+                               @"url": @"https://impress.sinaapp.com/README.md"
+                               }
                        });
     } else {
         [self hook_getPath:path parameters:parameters success:success failure:failure];
+    }
+}
+
++ (int)getCodeFromWeather:(int)weather
+{
+    // 0: sunny
+    // 1: partly cloudy
+    // 2: cloudy
+    // 3: rainy
+    // 4: stormy
+    // 5: snowy
+    // 6: foggy
+    // 7: unknown
+    switch (weather) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+            return 0;
+        case 4:
+            return 2;
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+            return 1;
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+            return 3;
+        case 16:
+        case 17:
+        case 18:
+            return 4;
+        case 19:
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+        case 24:
+        case 25:
+            return 5;
+        case 30:
+            return 6;
+        default:
+            return 7;
     }
 }
 
