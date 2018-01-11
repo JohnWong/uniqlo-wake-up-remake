@@ -29,27 +29,25 @@
                        @"id": @"111222333"
                        });
     } else if ([path isEqualToString:@"location"]) {
-        success(nil, @{
-                       @"result": @"success",
-                       @"country": @"CHINA",
-                       @"city": @"HANGZHOU",
-                       @"state": @"ZHEJIANG",
-                       @"lat": @30.22999954,
-                       @"lon": @120.1699982
-                       });
+        id lat = parameters[@"lat"];
+        id lon = parameters[@"lon"];
+        NSString *reverseUrl = [NSString stringWithFormat:@"http://api.map.baidu.com/geocoder/v2/?location=%@,%@&output=json&coordtype=wgs84ll&ak=YSxZG9cuy4SgHbGSkFyIvHrS", lat, lon];
+        [self hook_getPath:reverseUrl parameters:nil success:^(id op, NSDictionary *result) {
+            NSDictionary *address = result[@"result"][@"addressComponent"];
+            success(nil, @{
+                           @"result": @"success",
+                           @"country": address[@"country"] ? : @"",
+                           @"city": address[@"city"] ? : @"",
+                           @"state": address[@"province"] ? : @"",
+                           @"lat": lat,
+                           @"lon": lon
+                           });
+        } failure:failure];
     } else if ([path isEqualToString:@"weather"]) {
         NSString *weatherUrl = [NSString stringWithFormat:@"https://api.seniverse.com/v3/weather/daily.json?key=xn3lhqggtje7uqmp&location=%@:%@&language=zh-Hans&unit=c&start=0&days=1", parameters[@"lat"], parameters[@"lon"]];
         [self hook_getPath:weatherUrl parameters:nil success:^(id operation, NSDictionary *result) {
             NSArray *list = [result[@"results"] firstObject][@"daily"];
             NSDictionary *weather = list.firstObject;
-            // 0: sunny
-            // 1: partly cloudy
-            // 2: cloudy
-            // 3: rainy
-            // 4: stormy
-            // 5: snowy
-            // 6: foggy
-            // 7: unknown
             int high = weather[@"high"] ? [weather[@"high"] intValue] : 0;
             int low = weather[@"low"] ? [weather[@"low"] intValue] : 0;
             int weatherCode = [self.class getCodeFromWeather:[weather[@"code_day"] intValue]];
@@ -58,11 +56,11 @@
                            @"temperature": @{
                                    @"low": @{
                                            @"c": @(low),
-                                           @"f": @(low),
+                                           @"f": @(round(low * 1.8 + 32)),
                                            },
                                    @"high": @{
                                            @"c": @(high),
-                                           @"f": @(high),
+                                           @"f": @(round(high * 1.8 + 32)),
                                            }
                                    },
                            @"conditions": @(weatherCode)
