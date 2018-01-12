@@ -1,5 +1,6 @@
 # uniqlo-wake-up-remake
-Make UNIQLO WAKE UP app work again.
+Make UNIQLO WAKE UP app work again. 
+让`UNIQLO WAKE UP`应用重生。
 
 ![UNIQLO WAKE UP](http://johnwong.qiniudn.com/IMG_5359.PNG)
 
