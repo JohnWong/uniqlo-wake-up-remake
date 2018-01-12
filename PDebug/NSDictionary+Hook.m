@@ -35,14 +35,6 @@
         Method swizzledMethod = class_getInstanceMethod(self, @selector(hook3_objectForKey:));
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        {
-            Class cls = NSClassFromString(@"NSDictionary");
-            class_swizzleSelector(cls, @selector(dictionaryForKey:), @selector(hook_dictionaryForKey:));
-            class_swizzleSelector(cls, @selector(intForKey:), @selector(hook_intForKey:));
-            class_swizzleSelector(cls, @selector(stringForKey:), @selector(hook_stringForKey:));
-        }
-    });
 }
 
 - (void)printKey:(NSString *)aKey

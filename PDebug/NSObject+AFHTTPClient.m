@@ -8,6 +8,7 @@
 
 #import "NSObject+AFHTTPClient.h"
 #import <objc/runtime.h>
+#import <UIKit/UIKit.h>
 
 @implementation NSObject (AFHTTPClient)
 
@@ -31,18 +32,32 @@
     } else if ([path isEqualToString:@"location"]) {
         id lat = parameters[@"lat"];
         id lon = parameters[@"lon"];
-        NSString *reverseUrl = [NSString stringWithFormat:@"http://api.map.baidu.com/geocoder/v2/?location=%@,%@&output=json&coordtype=wgs84ll&ak=YSxZG9cuy4SgHbGSkFyIvHrS", lat, lon];
-        [self hook_getPath:reverseUrl parameters:nil success:^(id op, NSDictionary *result) {
-            NSDictionary *address = result[@"result"][@"addressComponent"];
-            success(nil, @{
-                           @"result": @"success",
-                           @"country": address[@"country"] ? : @"",
-                           @"city": address[@"city"] ? : @"",
-                           @"state": address[@"province"] ? : @"",
-                           @"lat": lat,
-                           @"lon": lon
-                           });
-        } failure:failure];
+        if (lat == nil || lon == nil) {
+            NSString *country = parameters[@"country"];
+            NSString *state = parameters[@"state"];
+            NSString *city = parameters[@"city"];
+            CGPoint coor = [self.class coordinateWithCountry:country state:state city:city];
+            lat = @(coor.x);
+            lon = @(coor.y);
+        }
+        if (lat != nil && lon != nil) {
+            NSString *reverseUrl = [NSString stringWithFormat:@"https://api.map.baidu.com/geocoder/v2/?location=%@,%@&output=json&coordtype=wgs84ll&ak=tzz6sWAUMGQvZFE5K30UZwx81FQrWQeR", lat, lon];
+            NSMutableDictionary *headers = [self valueForKey:@"defaultHeaders"];
+            headers[@"Referer"] = @"UNIQLO";
+            [self hook_getPath:reverseUrl parameters:nil success:^(id op, NSDictionary *result) {
+                NSDictionary *address = result[@"result"][@"addressComponent"];
+                success(nil, @{
+                               @"result": @"success",
+                               @"country": address[@"country"] ? : @"",
+                               @"city": address[@"city"] ? : @"",
+                               @"state": address[@"province"] ? : @"",
+                               @"lat": lat,
+                               @"lon": lon
+                               });
+            } failure:failure];
+        } else {
+            [self hook_getPath:path parameters:parameters success:success failure:failure];
+        }
     } else if ([path isEqualToString:@"weather"]) {
         NSString *weatherUrl = [NSString stringWithFormat:@"https://api.seniverse.com/v3/weather/daily.json?key=xn3lhqggtje7uqmp&location=%@:%@&language=zh-Hans&unit=c&start=0&days=1", parameters[@"lat"], parameters[@"lon"]];
         [self hook_getPath:weatherUrl parameters:nil success:^(id operation, NSDictionary *result) {
@@ -129,6 +144,24 @@
         default:
             return 7;
     }
+}
+
++ (CGPoint)coordinateWithCountry:(id)arg1 state:(id)arg2 city:(id)arg3
+{
+    Class cls = NSClassFromString(@"UWDataManager");
+    SEL sel = @selector(coordinateWithCountry:state:city:);
+    NSMethodSignature *signature = [cls instanceMethodSignatureForSelector:sel];
+    id instance = [cls performSelector:@selector(sharedManager)];
+    NSInvocation*invocation = [NSInvocation invocationWithMethodSignature:signature];
+    invocation.target = instance;
+    invocation.selector = sel;
+    [invocation setArgument:&arg1 atIndex:2];
+    [invocation setArgument:&arg2 atIndex:3];
+    [invocation setArgument:&arg3 atIndex:4];
+    [invocation invoke];
+    CGPoint ret;
+    [invocation getReturnValue:&ret];
+    return ret;
 }
 
 @end
