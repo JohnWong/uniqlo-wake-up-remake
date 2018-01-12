@@ -14,14 +14,14 @@
 
 + (void)initialize
 {
-    if (self == NSClassFromString(@"UWClockCommonViewController")) {
-        class_swizzleSelector(self, @selector(updateWeather:), @selector(hook_updateWeather:));
+    if (self == NSClassFromString(@"UWLocationTopViewController")) {
+        class_swizzleSelector(self, @selector(startUpdatingLocation), @selector(hook_startUpdatingLocation));
     }
 }
 
-- (void)hook_updateWeather:(int)arg1
+- (void)hook_startUpdatingLocation
 {
-    [self hook_updateWeather:arg1];
+    [self hook_startUpdatingLocation];
 }
 
 @end

@@ -31,6 +31,8 @@
 		52CFEC132008845F001107E8 /* NSString+Hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52CFEC0F2008845F001107E8 /* NSString+Hook.h */; };
 		52CFEC142008845F001107E8 /* NSString+Hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CFEC102008845F001107E8 /* NSString+Hook.m */; };
 		52CFEC152008845F001107E8 /* NSMutableDictionary+Hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52CFEC112008845F001107E8 /* NSMutableDictionary+Hook.h */; };
+		52CFEC1820088F3E001107E8 /* NSObject+Hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52CFEC1620088F3E001107E8 /* NSObject+Hook.h */; };
+		52CFEC1920088F3E001107E8 /* NSObject+Hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CFEC1720088F3E001107E8 /* NSObject+Hook.m */; };
 		52D1F35E2006499100598F0B /* UIViewController+Hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52D1F35C2006499100598F0B /* UIViewController+Hook.h */; };
 		52D1F35F2006499100598F0B /* UIViewController+Hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D1F35D2006499100598F0B /* UIViewController+Hook.m */; };
 		52D1F36220064AEA00598F0B /* NSObject+UWDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 52D1F36020064AEA00598F0B /* NSObject+UWDataManager.h */; };
@@ -100,6 +102,8 @@
 		52CFEC0F2008845F001107E8 /* NSString+Hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hook.h"; sourceTree = "<group>"; };
 		52CFEC102008845F001107E8 /* NSString+Hook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hook.m"; sourceTree = "<group>"; };
 		52CFEC112008845F001107E8 /* NSMutableDictionary+Hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Hook.h"; sourceTree = "<group>"; };
+		52CFEC1620088F3E001107E8 /* NSObject+Hook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Hook.h"; sourceTree = "<group>"; };
+		52CFEC1720088F3E001107E8 /* NSObject+Hook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Hook.m"; sourceTree = "<group>"; };
 		52D1F35C2006499100598F0B /* UIViewController+Hook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Hook.h"; sourceTree = "<group>"; };
 		52D1F35D2006499100598F0B /* UIViewController+Hook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Hook.m"; sourceTree = "<group>"; };
 		52D1F36020064AEA00598F0B /* NSObject+UWDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+UWDataManager.h"; sourceTree = "<group>"; };
@@ -243,6 +247,8 @@
 				52D1F35D2006499100598F0B /* UIViewController+Hook.m */,
 				52299ACD2003997000C69C74 /* YYClassInfo.h */,
 				52299ACE2003997000C69C74 /* YYClassInfo.m */,
+				52CFEC1620088F3E001107E8 /* NSObject+Hook.h */,
+				52CFEC1720088F3E001107E8 /* NSObject+Hook.m */,
 			);
 			path = PDebug;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 				52F99ECC2006151C0017B8B3 /* CTBlockDescription.h in Headers */,
 				52299AE82003A0E600C69C74 /* RTBMethod.h in Headers */,
 				52CFEC132008845F001107E8 /* NSString+Hook.h in Headers */,
+				52CFEC1820088F3E001107E8 /* NSObject+Hook.h in Headers */,
 				AAE19BE01AB14C0F006029B9 /* PDebugEntry.h in Headers */,
 				52299AEC2003A0E600C69C74 /* RTBClass.h in Headers */,
 				52CFEC052006546F001107E8 /* NSObject+AFHTTPClient.h in Headers */,
@@ -430,6 +437,7 @@
 				AAE19BDF1AB14C0F006029B9 /* PDebugEntry.m in Sources */,
 				52299AEA2003A0E600C69C74 /* RTBRuntimeHeader.m in Sources */,
 				52299AE42003A0E600C69C74 /* RTBTypeDecoder2.m in Sources */,
+				52CFEC1920088F3E001107E8 /* NSObject+Hook.m in Sources */,
 				52299AE72003A0E600C69C74 /* RTBTypeDecoder.m in Sources */,
 				52299AE02003A0E600C69C74 /* RTBMethod.m in Sources */,
 			);
