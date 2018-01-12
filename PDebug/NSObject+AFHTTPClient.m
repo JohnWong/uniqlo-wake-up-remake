@@ -32,15 +32,7 @@
     } else if ([path isEqualToString:@"location"]) {
         id lat = parameters[@"lat"];
         id lon = parameters[@"lon"];
-        if (lat == nil || lon == nil) {
-            NSString *country = parameters[@"country"];
-            NSString *state = parameters[@"state"];
-            NSString *city = parameters[@"city"];
-            CGPoint coor = [self.class coordinateWithCountry:country state:state city:city];
-            lat = @(coor.x);
-            lon = @(coor.y);
-        }
-        if (lat != nil && lon != nil) {
+        if (lat && lon) {
             NSString *reverseUrl = [NSString stringWithFormat:@"https://api.map.baidu.com/geocoder/v2/?location=%@,%@&output=json&coordtype=wgs84ll&ak=tzz6sWAUMGQvZFE5K30UZwx81FQrWQeR", lat, lon];
             NSMutableDictionary *headers = [self valueForKey:@"defaultHeaders"];
             headers[@"Referer"] = @"UNIQLO";
@@ -56,7 +48,21 @@
                                });
             } failure:failure];
         } else {
-            [self hook_getPath:path parameters:parameters success:success failure:failure];
+            NSString *country = parameters[@"country"];
+            NSString *state = parameters[@"state"];
+            NSString *city = parameters[@"city"];
+            CGPoint coor = [self.class coordinateWithCountry:country state:state city:city];
+            lat = @(coor.x);
+            lon = @(coor.y);
+            NSMutableDictionary *result = [@{
+                                             @"result": @"success",
+                                             @"lat": lat,
+                                             @"lon": lon
+                                             } mutableCopy];
+            result[@"country"] = country;
+            result[@"city"] = city;
+            result[@"state"] = state;
+            success(nil, result);
         }
     } else if ([path isEqualToString:@"weather"]) {
         NSString *weatherUrl = [NSString stringWithFormat:@"https://api.seniverse.com/v3/weather/daily.json?key=xn3lhqggtje7uqmp&location=%@:%@&language=zh-Hans&unit=c&start=0&days=1", parameters[@"lat"], parameters[@"lon"]];
