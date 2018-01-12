@@ -1,5 +1,7 @@
 # uniqlo-wake-up-remake
-Make UNIQLO WAKE UP app work again
+Make UNIQLO WAKE UP app work again.
+
+![UNIQLO WAKE UP](http://johnwong.qiniudn.com/IMG_5359.PNG)
 
 [UNIQLO WAKE UP](https://www.appinn.com/uniqlo-wake-up/)是一款非常有意思的闹钟应用。每天早晨用轻柔的音乐和人声唤醒你。几年前用过一段时间，前几天搜了下已经下架，从购买记录里重装回来一直闪退。于是准备用自己的能力来让它重生。
 
